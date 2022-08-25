@@ -1605,6 +1605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _getInputs: {fileID: 820528908}
   _videoProperties: {fileID: 820528909}
+  _folderName: data/
 --- !u!114 &820528908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1631,14 +1632,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 096db687e447b4666964e65d8dba5088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PlayArea>k__BackingField: 
+  <PlayArea>k__BackingField: test
   <TimeZone>k__BackingField: 2
   <Weather>k__BackingField: 0
-  <_shootedAt>k__BackingField:
-    year: 0
-    month: 0
-    day: 0
-    hour: 0
+  <ShootedAt>k__BackingField:
+    year: 2022
+    month: 8
+    day: 3
+    hour: 17
     minute: 0
     second: 0
 --- !u!114 &820528910

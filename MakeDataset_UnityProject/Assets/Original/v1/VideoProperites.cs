@@ -13,18 +13,5 @@ public class VideoProperites : MonoBehaviour
     [field:SerializeField]
     public Weather Weather{ get; private set; }
     [field: SerializeField]
-    public TimeStamp _shootedAt{ get; private set; }
-}
-public enum TimeZone{
-    Morning,
-    Noon,
-    Afternoon,
-    Evening,
-    Night
-}
-public enum Weather{
-    Sunny,
-    Cloudy,
-    Rainy,
-    Snowy
+    public TimeStamp ShootedAt{ get; private set; }
 }
