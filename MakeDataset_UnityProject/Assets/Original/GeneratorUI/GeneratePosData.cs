@@ -15,7 +15,7 @@ public class GeneratePosData : MonoBehaviour
     [SerializeField]
     GetInputs _getInputs;
     [SerializeField]
-    VideoProperites _videoProperties;
+    InputDatas _videoProperties;
     string _downloadsPath => Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Downloads/";
     [SerializeField, Tooltip("Downloadsフォルダの中に下記フォルダを用意し、mp4をいれる")]
     string _folderName = "data";
@@ -58,7 +58,7 @@ public class GeneratePosData : MonoBehaviour
 
         var json = JsonUtility.ToJson(streetsJsonData, true);
         Debug.Log(json);
-        var jsonFilePath = _folderPath + "result/" + _videoProperties.PlayArea + ".json";
+        var jsonFilePath = _folderPath + "result/" + _videoProperties.playArea + ".json";
         StreamWriter writer = new StreamWriter(jsonFilePath, false);//初めに指定したデータの保存先を開く
         writer.WriteLine(json);//JSONデータを書き込み
         writer.Flush();//バッファをクリアする
@@ -76,7 +76,7 @@ public class GeneratePosData : MonoBehaviour
     async UniTask<SingleStreetJSON> MakeNewStreetJSON( //新しいものを作る。更新とかは考えてない
         string fromNum, //撮影番号。最初だからファイル名
         string folderPath,
-        VideoProperites vProperties,
+        InputDatas vProperties,
         double startLat,
         double startLng,
         double endLat,
@@ -93,16 +93,16 @@ public class GeneratePosData : MonoBehaviour
         // 道の情報
         var streetJSON = new SingleStreetJSON();
         streetJSON.streetId = uuid;
-        streetJSON.playArea = vProperties.PlayArea;
+        streetJSON.playArea = vProperties.playArea;
         streetJSON.edittedAt = TimeStampExt.DT2TS(DateTime.Now);
         streetJSON.streetNum = fromNum + "-"+(Int32.Parse(fromNum)+1).ToString();
 
         // とくにその撮影したものの情報
         var streetVideoJSON = new StreetVideoJSON();
         streetVideoJSON.fileName = newName;
-        streetVideoJSON.shootedAt = vProperties.ShootedAt;
-        streetVideoJSON.timeZone = vProperties.TimeZone.ToString();
-        streetVideoJSON.weather = vProperties.Weather.ToString();
+        streetVideoJSON.shootedAt = vProperties.shootedAt;
+        streetVideoJSON.timeZone = vProperties.timeZone.ToString();
+        streetVideoJSON.weather = vProperties.weather.ToString();
         streetVideoJSON.frameLength = await CountVideoFrame(folderPath + fromNum + ".mp4");
         streetVideoJSON.flag = true;
         // 位置を補完して流し込み

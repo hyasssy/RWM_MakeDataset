@@ -8,6 +8,8 @@ using System.Linq;
 public class GetInputs : MonoBehaviour
 {
     [SerializeField]
+    GameObject _fileNameRoot;
+    [SerializeField]
     GameObject _numRoot;
     [SerializeField]
     GameObject _latlngRoot;

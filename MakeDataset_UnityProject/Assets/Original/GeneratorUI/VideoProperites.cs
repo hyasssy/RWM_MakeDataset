@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class VideoProperites : MonoBehaviour
+public class InputDatas : MonoBehaviour
 {
-    //ここのUI作るのちょっとダルかったからInspectorからの入力に甘んじることとする
-    [field:SerializeField]
-    public string PlayArea{ get; private set; }
-    [field:SerializeField]
-    public TimeZone TimeZone{ get; private set; }
-    [field:SerializeField]
-    public Weather Weather{ get; private set; }
+    // 設計甘めに適当にpublicにしてる
+    // [field: SerializeField]
+    public string playArea;// { get; private set; }
+    public TimeZone timeZone;
     [field: SerializeField]
-    public TimeStamp ShootedAt{ get; private set; }
+    public Weather weather;
+    [field: SerializeField]
+    public TimeStamp shootedAt;
+
+
 }
