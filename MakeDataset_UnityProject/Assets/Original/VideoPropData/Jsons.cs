@@ -1,34 +1,105 @@
-[Serializable]
-public class StreetsJSON{
-    public List<SingleStreetJSON> street = new List<SingleStreetJSON>();
-}
+using System;
+using System.Collections.Generic;
 
+// 1次データ
 [Serializable]
-public class SingleStreetJSON{
-    public string streetId;
-    public string streetNum;
+public class TownVideoDataJSON{
     public string playArea;
     public TimeStamp edittedAt;
-    public StreetVideoJSON video;
+    public LocationCoordJSON originLocation;
+    public List<StreetVideoJSON> videos = new List<StreetVideoJSON>();
+}
+[Serializable]
+public class LocationCoordJSON{
+    public double lat;
+    public double lng;
+    public double height;
 }
 [Serializable]
 public class StreetVideoJSON{
-    public string fileName;
+    public string streetId;
+    public string videoId;
+    public VideoFileNameJSON fileName;
     public TimeStamp shootedAt;
-    public string timeZone;
-    public string weather;
+    public TimeZone timeZone;
+    public Weather weather;
     public int frameLength;
     public bool flag;
-    public List<LocationJSON> posLog;
+    public List<LocationLogJSON> locationLogs = new List<LocationLogJSON>();
+
 }
 [Serializable]
-public class LocationJSON{
+public class VideoFileNameJSON{
+    public string originFileName;
+    public string lightFileName;
+}
+
+[Serializable]
+public class LocationLogJSON{
     public int frameNumber;
     public double lat;
     public double lng;
     public double height;
     public float rotation;
 }
+
+
+
+
+// 検索用2次データ
+[Serializable]
+public class SearchDataJSON{
+    public string playArea;
+    public TimeStamp edittedAt;
+    public LocationCoordJSON originLocation;
+    public List<DataInGridJSON> latLngGridDatas = new List<DataInGridJSON>();
+}
+[Serializable]
+public class DataInGridJSON{
+    public string gridId;
+    public List<VideoFrameData> locations = new List<VideoFrameData>();
+}
+[Serializable]
+public class VideoFrameData{
+    public string videoId;
+    public LocationLogJSON locationLog;
+}
+
+
+
+
+// Obsolete
+
+// [Serializable]
+// public class SingleStreetJSON{
+//     public string streetId;
+//     public string streetNum;
+//     public string playArea;
+//     public TimeStamp edittedAt;
+//     public StreetVideoJSON video;
+// }
+// [Serializable]
+// public class StreetVideoJSON{
+//     public string fileName;
+//     public TimeStamp shootedAt;
+//     public string timeZone;
+//     public string weather;
+//     public int frameLength;
+//     public bool flag;
+//     public List<LocationJSON> posLog;
+// }
+// [Serializable]
+// public class LocationJSON{
+//     public int frameNumber;
+//     public double lat;
+//     public double lng;
+//     public double height;
+//     public float rotation;
+// }
+
+
+
+
 
 [Serializable]
 public class TimeStamp
