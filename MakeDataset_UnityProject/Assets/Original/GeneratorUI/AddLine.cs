@@ -25,6 +25,7 @@ public class AddLine : MonoBehaviour
         {
             var newButton = Instantiate(buttonSet.buttonPrefab);
             newButton.transform.SetParent(buttonSet.rootTransform);
+            newButton.transform.localScale = Vector3.one;
         });
     }
 }

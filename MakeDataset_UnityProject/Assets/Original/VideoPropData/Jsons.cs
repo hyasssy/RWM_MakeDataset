@@ -39,7 +39,7 @@ public class LocationLogJSON{
     public int frameNumber;
     public double lat;
     public double lng;
-    public double height;
+    public float height;
     public float rotation;
 }
 
