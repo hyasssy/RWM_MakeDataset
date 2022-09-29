@@ -7,58 +7,57 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Cysharp.Threading.Tasks;
 using System.Linq;
+using UnityEngine.Serialization;
 
 public class MakeGridData : MonoBehaviour
 {
-    string _downloadsPath => Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Downloads/";
-    [SerializeField, Tooltip("Downloadsフォルダの中に下記フォルダを用意し、mp4をいれる")]
-    string _folderName = "data";
-    string _folderPath => _downloadsPath + _folderName + "/";
-
-    TownVideoDataJSON _townVideoData = new TownVideoDataJSON();
-    async UniTask<TownVideoDataJSON> MakePrimaryDataJSON(
-        // string playArea,
-        // LocationCoordJSON originLocation,
-        InputDatas inputDatas
-    ){
+    // すでにjsonがある場合には、追加したものを~_2.jsonとして保存するようにする。（少しずつ作業できるようにする）
+    // データがあるか探索し、無い場合やどう見ても重複してるだろ、っていうやつを消すのも欲しい...
+    string DownloadsPath => Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Downloads/";
+    [SerializeField, Tooltip("Downloadsフォルダの中に下記名のフォルダを用意し、mp4をいれておく")]
+    string folderName = "data";
+    string FolderPath => DownloadsPath + folderName + "/";
+    TownVideoDataJson _townVideoData = new TownVideoDataJson();
+    
+    async UniTask<TownVideoDataJson> MakePrimaryDataJSON(InputDatas inputDatas){
         _townVideoData.playArea = inputDatas.playArea;
         _townVideoData.edittedAt = TimeStampExt.DT2TS(DateTime.Now);
         // _townVideoData.originLocation = originLocation;//TODO
-        for(){
-            var value = await MakeStreetVideoJSON(
-                inputDatas
-            );
-            _townVideoData.videos.Add(value);
-        }
+        // for(){
+        //     var value = await MakeStreetVideoJSON(
+        //         inputDatas
+        //     );
+        //     _townVideoData.videos.Add(value);
+        // }
         // ここforでAddしていく
         return _townVideoData;
     }
-    async UniTask<StreetVideoJSON> MakeStreetVideoJSON(
+    async UniTask<StreetVideoJson> MakeStreetVideoJSON(
         string videoFilePath,
         string streetId,
         string latLng,
         TimeStamp shootedAt,
         TimeZone timeZone,
         Weather weather,
-        LocationLogJSON locationLog
+        LocationLogJson locationLog
         // InputDatas inputDatas
     ){
-        var streetVideoData = new StreetVideoJSON();
+        var streetVideoData = new StreetVideoJson();
         streetVideoData.streetId = streetId;
         var videoId = GetUniqueVideoId(_townVideoData, streetId);
         streetVideoData.videoId = videoId;
-        var fileNameClass = new VideoFileNameJSON();
-        fileNameClass.originFileName = videoId + ".mp4";
+        var fileNameClass = new VideoFileNameJson();
+        fileNameClass.standardFileName = videoId + ".mp4";
         fileNameClass.lightFileName = videoId + "_light.mp4";// これもさくっと作っておく。
         streetVideoData.fileName = fileNameClass;
         streetVideoData.shootedAt = shootedAt;
         streetVideoData.timeZone = timeZone;
         streetVideoData.weather = weather;
-        streetVideoData.frameLength = await CountVideoFrame()
+        streetVideoData.frameLength = await CountVideoFrame(FolderPath + videoId + ".mp4");
         streetVideoData.flag = true;
         // streetVideoData.locationLogs =
     }
-    string GetUniqueVideoId(TownVideoDataJSON videoData, string streetId){
+    string GetUniqueVideoId(TownVideoDataJson videoData, string streetId){
         while(true){
             string tmpName = streetId +"_"+ UnityEngine.Random.Range(0,1000).ToString();
             bool isAlreadyExist = false;

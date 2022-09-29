@@ -13,6 +13,6 @@ public class InputDatas : MonoBehaviour
     public Weather weather;
     public TimeStamp shootedAt;
 
-    [HideInInspector]
-    public List<string>
+    // [HideInInspector]
+    // public List<string>
 }

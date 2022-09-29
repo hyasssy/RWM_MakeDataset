@@ -1,41 +1,47 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
-// 1次データ
+// 1次データ PlayArea全体
 [Serializable]
-public class TownVideoDataJSON{
+public class TownVideoDataJson{
     public string playArea;
     public TimeStamp edittedAt;
-    public LocationCoordJSON originLocation;
-    public List<StreetVideoJSON> videos = new List<StreetVideoJSON>();
+    public LocationCoordJson originLocation; // 手動で入れる
+    public List<StreetVideoJson> videos = new List<StreetVideoJson>();
 }
 [Serializable]
-public class LocationCoordJSON{
+public class LocationCoordJson{
     public double lat;
     public double lng;
     public double height;
 }
 [Serializable]
-public class StreetVideoJSON{
+public class StreetVideoJson{
     public string streetId;
     public string videoId;
-    public VideoFileNameJSON fileName;
+    public VideoFileNameJson fileName;
+}
+[Serializable]
+public class VideoFileNameJson{
+    public string standardFileName;
+    public string lightFileName;
+}
+
+// 1次データ 各Videoのメタデータ 全フレームのデータを保持
+[Serializable]
+public class VideoMetaJson
+{
     public TimeStamp shootedAt;
     public TimeZone timeZone;
     public Weather weather;
     public int frameLength;
     public bool flag;
-    public List<LocationLogJSON> locationLogs = new List<LocationLogJSON>();
-
-}
-[Serializable]
-public class VideoFileNameJSON{
-    public string originFileName;
-    public string lightFileName;
+    public List<LocationLogJson> locationLogs = new List<LocationLogJson>();
 }
 
 [Serializable]
-public class LocationLogJSON{
+public class LocationLogJson{
     public int frameNumber;
     public double lat;
     public double lng;
@@ -48,58 +54,34 @@ public class LocationLogJSON{
 
 // 検索用2次データ
 [Serializable]
-public class SearchDataJSON{
+public class SearchDataJson{
     public string playArea;
     public TimeStamp edittedAt;
-    public LocationCoordJSON originLocation;
-    public List<DataInGridJSON> latLngGridDatas = new List<DataInGridJSON>();
+    public List<CellRegionJson> latLngGrid = new List<CellRegionJson>();
 }
 [Serializable]
-public class DataInGridJSON{
-    public string gridId;
+public class CellRegionJson{
+    public string cellRegionId;
+    public List<CellJson> cells = new List<CellJson>();     
+}
+
+[Serializable]
+public class CellJson
+{
+    public string cellId;
     public List<VideoFrameData> locations = new List<VideoFrameData>();
 }
+
 [Serializable]
 public class VideoFrameData{
     public string videoId;
-    public LocationLogJSON locationLog;
+    public List<int> frameNumbers = new List<int>();
 }
 
 
 
 
-// Obsolete
-
-// [Serializable]
-// public class SingleStreetJSON{
-//     public string streetId;
-//     public string streetNum;
-//     public string playArea;
-//     public TimeStamp edittedAt;
-//     public StreetVideoJSON video;
-// }
-// [Serializable]
-// public class StreetVideoJSON{
-//     public string fileName;
-//     public TimeStamp shootedAt;
-//     public string timeZone;
-//     public string weather;
-//     public int frameLength;
-//     public bool flag;
-//     public List<LocationJSON> posLog;
-// }
-// [Serializable]
-// public class LocationJSON{
-//     public int frameNumber;
-//     public double lat;
-//     public double lng;
-//     public double height;
-//     public float rotation;
-// }
-
-
-
-
+// Json用型定義
 
 [Serializable]
 public class TimeStamp
