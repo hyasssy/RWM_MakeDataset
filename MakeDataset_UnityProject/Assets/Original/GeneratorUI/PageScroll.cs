@@ -7,7 +7,7 @@ public class PageScroll : MonoBehaviour
 {
     [SerializeField] private bool isInverse = false;
     [SerializeField] private GameObject scrollRoot;
-    [SerializeField] private int scrollSpeed = 1;
+    [SerializeField] private int scrollSpeed = 20;
     private Vector3 rootOriginPos;
     private void Start()
     {
@@ -19,7 +19,8 @@ public class PageScroll : MonoBehaviour
         var scrollY = Input.mouseScrollDelta.y;
         if (scrollY != 0)
         {
-            scrollRoot.transform.position += Vector3.up * scrollY;
+            var inverse = isInverse ? -1 : 1;
+            scrollRoot.transform.position += Vector3.up * scrollY * scrollSpeed *inverse;
         }
 
         if (scrollRoot.transform.position.y < rootOriginPos.y)
