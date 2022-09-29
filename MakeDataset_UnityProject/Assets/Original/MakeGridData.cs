@@ -23,13 +23,13 @@ public class MakeGridData : MonoBehaviour
     // Execボタンから起動
     public void Execute()
     {
-        var inputDatas = getInputs.GetInputsFunction();
+        var inputDatas = getInputs.GetInputsFunction(); //扱うデータフォルダ設定も初期化
         _ioDataHandler = new IODataHandler(inputDatas.PlayArea);
         if (_ioDataHandler.CheckExistJson())
         {
             //すでに存在しているので、追加するだけでおけ
             _previousTownVideoData = _ioDataHandler.GetExistJsonData();
-            // AddDatas(inputDatas);
+            AddDatas(inputDatas);
         }
         else
         {// まだ存在していないので、新規で作成
@@ -40,7 +40,7 @@ public class MakeGridData : MonoBehaviour
     void AddDatas(InputDatas inputDatas)
     {
         _previousTownVideoData.edittedAt =TimeStampExt.DT2TS(DateTime.Now);
-        // ここに追加
+        // TODO ここに追加
     }
 
     void MakePrimaryDataJSON(InputDatas inputDatas)

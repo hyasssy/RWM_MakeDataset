@@ -1,13 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Video;
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
-using Cysharp.Threading.Tasks;
-using System.Linq;
-using UnityEngine.Serialization;
 
 /// <summary>
 /// Jsonの読み込みや保存、Renameした動画データの保存、すでにJsonファイルが存在しているかどうかのチェックなどする 
@@ -28,6 +21,14 @@ public class IODataHandler
     public IODataHandler(string playArea)
     {
         _playArea = playArea;
+
+        int i = 0;
+        while (Directory.Exists(ResultDataFolderPath))
+        {
+            i++;
+            _resultDataFolderName = "result_" + i.ToString();
+            if(!Directory.Exists(ResultDataFolderPath)) Directory.CreateDirectory(ResultDataFolderPath);
+        }
     }
 
     /// <summary>
