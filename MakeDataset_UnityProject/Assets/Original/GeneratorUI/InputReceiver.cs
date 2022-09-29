@@ -1,19 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputReceiver : MonoBehaviour
 {
-    [SerializeField]
-    AddLine _addLines;
-    [SerializeField]
-    GeneratePosData _generatePosData;
+    [SerializeField] AddLine addLines;
+
+    [SerializeField] private MakeGridData makeGridData;
     public void PushExec()
     {
-        _generatePosData.ExecFunction();
+        makeGridData.Execute();
     }
     public void PushAddLine()
     {
-        _addLines.AddLineFunction();
+        addLines.AddLineFunction();
     }
 }

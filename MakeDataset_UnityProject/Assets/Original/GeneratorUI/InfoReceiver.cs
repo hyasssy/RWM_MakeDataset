@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Michsky.UI.ModernUIPack;
-using UnityEngine.UI;
 using TMPro;
 
 public class InfoReceiver : MonoBehaviour
