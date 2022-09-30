@@ -11,7 +11,7 @@ public class IODataHandler
     //Downloadsフォルダの中に下記名のフォルダを用意し、mp4たちをいれておく。すでにjsonがあるならそれも入れる。
     string _originalDataFolderName = "data";
     public string OriginalDataFolderPath => DownloadsPath + _originalDataFolderName + "/";
-    private string _resultDataFolderName = "result";
+    private string _resultDataFolderName = "data/result";
     private string ResultDataFolderPath => DownloadsPath + _resultDataFolderName + "/";
     
     private string _playArea;
@@ -26,9 +26,9 @@ public class IODataHandler
         while (Directory.Exists(ResultDataFolderPath))
         {
             i++;
-            _resultDataFolderName = "result_" + i.ToString();
-            if(!Directory.Exists(ResultDataFolderPath)) Directory.CreateDirectory(ResultDataFolderPath);
+            _resultDataFolderName = "data/result_" + i.ToString();
         }
+        Directory.CreateDirectory(ResultDataFolderPath);
     }
 
     /// <summary>

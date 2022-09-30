@@ -15,7 +15,7 @@ public class MakeGridData : MonoBehaviour
     // データがあるか探索し、無い場合やどう見ても重複してるだろ、っていうやつを消すのも欲しい...
     [SerializeField] private GetInputs getInputs;
 
-    TownVideoDataJson _resultTownVideoData = new TownVideoDataJson();
+    TownVideoDataJson _resultTownVideoData;
     private TownVideoDataJson _previousTownVideoData;
     private IODataHandler _ioDataHandler;
 
@@ -28,23 +28,30 @@ public class MakeGridData : MonoBehaviour
         if (_ioDataHandler.CheckExistJson())
         {
             //すでに存在しているので、追加するだけでおけ
-            _previousTownVideoData = _ioDataHandler.GetExistJsonData();
             AddDatas(inputDatas);
+            Debug.Log("DataAdded!!!");
         }
         else
         {// まだ存在していないので、新規で作成
             MakePrimaryDataJSON(inputDatas);
+            Debug.Log("DataMade!!!");
         }
     }
 
     void AddDatas(InputDatas inputDatas)
     {
-        _previousTownVideoData.edittedAt =TimeStampExt.DT2TS(DateTime.Now);
-        // TODO ここに追加
+        _previousTownVideoData = _ioDataHandler.GetExistJsonData();
+        _resultTownVideoData = _previousTownVideoData;
+        _resultTownVideoData.edittedAt =TimeStampExt.DT2TS(DateTime.Now);
+        
+        // 一つ一つのビデオデータを追加
+        MakeEachVideoData(inputDatas);
+        _ioDataHandler.SaveResultJson(_resultTownVideoData);
     }
 
     void MakePrimaryDataJSON(InputDatas inputDatas)
     {
+        _resultTownVideoData = new TownVideoDataJson();
         _resultTownVideoData.playArea = inputDatas.PlayArea;
         _resultTownVideoData.edittedAt = TimeStampExt.DT2TS(DateTime.Now);
         var tmpOrigin = new LocationCoordJson();
@@ -52,19 +59,28 @@ public class MakeGridData : MonoBehaviour
         tmpOrigin.lng = 0;
         tmpOrigin.height = 0;
         _resultTownVideoData.originLocation = tmpOrigin; // あとで手動で入れる想定
-        
-        for(int i=0;i<inputDatas.videoDatas.Count;i++)
+        MakeEachVideoData(inputDatas);
+        _ioDataHandler.SaveResultJson(_resultTownVideoData);
+    }
+
+    /// <summary>
+    /// 個々の道のビデオデータを追加していく処理
+    /// </summary>
+    void MakeEachVideoData(InputDatas inputDatas)
+    {
+        for (int i = 0; i < inputDatas.videoDatas.Count; i++)
         {
             var videoData = new StreetVideoJson();
             videoData.streetId = inputDatas.videoDatas[i].streetId;
             videoData.videoId = GetUniqueVideoId(_resultTownVideoData, videoData.streetId);
+            videoData.fileName = new VideoFileNameJson();
             videoData.fileName.standardFileName = videoData.videoId + ".mp4";
             videoData.fileName.lightFileName = videoData.videoId + "_light.mp4";
-            
+
             _resultTownVideoData.videos.Add(videoData);
-            
+
             SetEachVideoData(
-                inputDatas.videoDatas[i].fileName,
+                inputDatas.videoDatas[i].fileName + ".mp4",
                 videoData.videoId,
                 inputDatas.videoDatas[i].startLat,
                 inputDatas.videoDatas[i].startLng,
@@ -75,7 +91,6 @@ public class MakeGridData : MonoBehaviour
                 inputDatas.Weather
             ).Forget();
         }
-        _ioDataHandler.SaveResultJson(_resultTownVideoData);
     }
 
     /// <summary>
@@ -102,7 +117,7 @@ public class MakeGridData : MonoBehaviour
         videoMetaJson.shootedAt = shootedAt;
         videoMetaJson.timeZone = timeZone;
         videoMetaJson.weather = weather;
-        var frameLength = await CountVideoFrame(_ioDataHandler.OriginalDataFolderPath + originFileName + ".mp4");
+        var frameLength = await CountVideoFrame(_ioDataHandler.OriginalDataFolderPath + originFileName);
         videoMetaJson.frameLength = frameLength;
         videoMetaJson.flag = true;
         videoMetaJson.locationLogs = GetPosLogList(
@@ -110,6 +125,7 @@ public class MakeGridData : MonoBehaviour
         );
         
         _ioDataHandler.SaveRenamedVideo(originFileName, videoId, videoMetaJson);
+        Debug.Log("Saved Single Video Data!!!");
     }
 
     string GetUniqueVideoId(TownVideoDataJson videoData, string streetId){
@@ -148,7 +164,7 @@ public class MakeGridData : MonoBehaviour
                  var end = CoordinateExt.Coord2Meter(new Coordinate(result.lat, result.lng));
                  var direction = new Vector2((float)(end.x - start.x), (float)(end.y - start.y));
                  result.rotation = Vector2.SignedAngle(Vector2.up, direction);
-                 Debug.Log("start" + start + ", end" + end + "angle" + result.rotation);
+                 // Debug.Log("start" + start + ", end" + end + "angle" + result.rotation);
                  if(i == 1){
                      resultList[0].rotation = result.rotation;
                  }
