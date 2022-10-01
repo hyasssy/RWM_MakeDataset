@@ -9,7 +9,7 @@ public class MakeSearchGridData : MonoBehaviour
 {
     string DownloadsPath => Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Downloads/";
     string DataFolderPath => DownloadsPath + "data/";
-    private string ResultFolderPath => DataFolderPath + "result/";
+    private string ResultFolderPath => DataFolderPath + "search/";
 
     /// <summary>
     /// Execボタンから起動
@@ -36,7 +36,7 @@ public class MakeSearchGridData : MonoBehaviour
             SearchData.districts = region.districtList;
             var jsonString = JsonUtility.ToJson(SearchData, true);
             if (!Directory.Exists(ResultFolderPath)) Directory.CreateDirectory(ResultFolderPath);
-            SaveJson(jsonString, ResultFolderPath + playAreaName + "_search_"+ region.regionId +".json");
+            SaveJson(jsonString, ResultFolderPath + region.regionId +".json");
         });
     }
 
