@@ -53,24 +53,29 @@ public class LocationLogJson{
 
 
 
-// 検索用2次データ
+// 検索用2次データ [playArea]_Search.json
+public class Region // これはファイル管理のみに使う。JSONにはしないので、Serializableいらない
+{
+    public string regionId;
+    public List<CellDistrictJson> districtList = new List<CellDistrictJson>();
+}
+
 [Serializable]
 public class SearchDataJson{
     public string playArea;
     public TimeStamp edittedAt;
-    public List<CellRegionJson> latLngGrid = new List<CellRegionJson>();
+    public List<CellDistrictJson> districts = new List<CellDistrictJson>();
 }
 [Serializable]
-public class CellRegionJson{
-    public string cellRegionId;
+public class CellDistrictJson{
+    public string districtId;
     public List<CellJson> cells = new List<CellJson>();     
 }
-
 [Serializable]
 public class CellJson
 {
     public string cellId;
-    public List<VideoFrameData> locations = new List<VideoFrameData>();
+    public List<VideoFrameData> videoFrameList = new List<VideoFrameData>();
 }
 
 [Serializable]

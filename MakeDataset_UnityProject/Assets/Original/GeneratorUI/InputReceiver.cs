@@ -1,13 +1,14 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InputReceiver : MonoBehaviour
 {
     [SerializeField] AddLine addLines;
 
-    [SerializeField] private MakeGridData makeGridData;
+    [FormerlySerializedAs("makeGridData")] [SerializeField] private MakePrimaryData makePrimaryData;
     public void PushExec()
     {
-        makeGridData.Execute();
+        makePrimaryData.Execute();
     }
     public void PushAddLine()
     {
