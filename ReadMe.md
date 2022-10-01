@@ -14,6 +14,6 @@
 ## 2次データ制作
 - Downloadsにdataというフォルダを作り、その中にplayArea.jsonとそこに記載された動画のmetadata.jsonをずらっと格納します。
 - 画面でplayAreaを入力し、Execを押します
-- Downloads/data/result/内に、
+- Downloads/data/search/内に、
   緯度経度でresion(ファイルはRegionで分けられます)/district/cell/たくさんのフレーム情報
   という構造で整理された検索用データが生成されます。
