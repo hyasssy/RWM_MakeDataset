@@ -15,6 +15,7 @@ public class IODataHandler
     private string _resultDataFolderName = "data/result";
     private string ResultDataFolderPath => DownloadsPath + _resultDataFolderName + "/";
     private string ResultVideoFolderPath => ResultDataFolderPath + "videos_mov/";
+    private string ResultVideoJsonFolderPath => ResultDataFolderPath + "videos/";
     
     private string _playArea;
     private string PrimaryJsonDataPath => OriginalDataFolderPath + _playArea + ".json";
@@ -69,9 +70,10 @@ public class IODataHandler
     public void SaveRenamedVideo(string originalVideoFileName, string newVideoId, VideoMetaJson videoMetaJson)
     {
         if (!Directory.Exists(ResultVideoFolderPath)) Directory.CreateDirectory(ResultVideoFolderPath);
+        if (!Directory.Exists(ResultVideoJsonFolderPath)) Directory.CreateDirectory(ResultVideoJsonFolderPath);
         File.Copy(OriginalDataFolderPath + originalVideoFileName, ResultVideoFolderPath + newVideoId + ".mov");
         
         var j = JsonUtility.ToJson(videoMetaJson, true);
-        SaveJson(j, ResultVideoFolderPath + videoMetaJson.videoId + ".json");
+        SaveJson(j, ResultVideoJsonFolderPath + videoMetaJson.videoId + ".json");
     }
 }
