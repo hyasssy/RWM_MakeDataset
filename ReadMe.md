@@ -1,19 +1,22 @@
 # 使い方
-- 一応全てランタイムのGameViewで完結するようにしているので、ビルドしても使えると思いますが、テストしていません。
+
+- 一応全てランタイムの GameView で完結するようにしているので、ビルドしても使えると思いますが、テストしていません。
 
 # 手順
-## 1次データ制作
-- Downloadsにdataというフォルダを作り、その中に動画をずらっと格納します。
+
+## 1 次データ制作
+
+- Downloads に data というフォルダを作り、その中に動画をずらっと格納します。(.mov)
 - 画面に沿って必要な情報を埋めます。スペルミスなどには注意してください。
 - Downloads/data/result/内に、
-  - playareaで入力した値.json
-  - Renameされた動画
-  - 各動画のmetadataが配置されます。
-- また、Downloads/dataにすでに同名のplayarea.jsonがあった場合、それに追記する形でresultにはjsonが出力されます。
+  - playarea で入力した値.json
+  - videos (Rename された動画と各動画の metadata) が配置されます。
+- また、Downloads/data にすでに同名の playarea.json があった場合、それに追記する形で result には json が出力されます。
 
-## 2次データ制作
-- Downloadsにdataというフォルダを作り、その中にplayArea.jsonとそこに記載された動画のmetadata.jsonをずらっと格納します。
-- 画面でplayAreaを入力し、Execを押します
+## 2 次データ制作
+
+- Downloads に playarea.json と videos(metadata だけ使用するが要は全部そのままつっこめば ok)
+- 画面で playArea を入力し、Exec を押します
 - Downloads/data/search/内に、
-  緯度経度でresion(ファイルはRegionで分けられます)/district/cell/たくさんのフレーム情報
+  緯度経度で resion(ファイルは Region で分けられます)/district/cell/たくさんのフレーム情報
   という構造で整理された検索用データが生成されます。

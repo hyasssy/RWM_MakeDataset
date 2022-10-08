@@ -80,7 +80,7 @@ public class MakePrimaryData : MonoBehaviour
             _resultTownVideoData.videos.Add(videoData);
 
             SetEachVideoData(
-                inputDatas.videoDatas[i].fileName + ".mp4",
+                inputDatas.videoDatas[i].fileName + ".mov",
                 videoData.videoId,
                 inputDatas.videoDatas[i].startLat,
                 inputDatas.videoDatas[i].startLng,

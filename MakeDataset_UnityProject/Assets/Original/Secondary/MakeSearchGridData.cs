@@ -9,6 +9,7 @@ public class MakeSearchGridData : MonoBehaviour
 {
     string DownloadsPath => Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Downloads/";
     string DataFolderPath => DownloadsPath + "data/";
+    private string VideosFolderPath => DataFolderPath + "videos/";
     private string ResultFolderPath => DataFolderPath + "search/";
 
     /// <summary>
@@ -216,7 +217,7 @@ public class MakeSearchGridData : MonoBehaviour
         var metadataList = new List<VideoMetaJson>();
         videoIdList.ForEach(videoId =>
         {
-            StreamReader reader = new StreamReader(DataFolderPath + videoId + ".json"); //受け取ったパスのファイルを読み込む
+            StreamReader reader = new StreamReader(VideosFolderPath + videoId + ".json"); //受け取ったパスのファイルを読み込む
             var datastr = reader.ReadToEnd();//ファイルの中身をすべて読み込む
             reader.Close();//ファイルを閉じる
             var metaData = JsonUtility.FromJson<VideoMetaJson>(datastr);

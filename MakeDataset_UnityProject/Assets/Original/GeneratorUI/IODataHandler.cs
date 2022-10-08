@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.IO;
+using UnityEngine.PlayerLoop;
 
 /// <summary>
 /// Jsonの読み込みや保存、Renameした動画データの保存、すでにJsonファイルが存在しているかどうかのチェックなどする 
@@ -13,6 +14,7 @@ public class IODataHandler
     public string OriginalDataFolderPath => DownloadsPath + _originalDataFolderName + "/";
     private string _resultDataFolderName = "data/result";
     private string ResultDataFolderPath => DownloadsPath + _resultDataFolderName + "/";
+    private string ResultVideoFolderPath => ResultDataFolderPath + "videos_mov/";
     
     private string _playArea;
     private string PrimaryJsonDataPath => OriginalDataFolderPath + _playArea + ".json";
@@ -66,9 +68,10 @@ public class IODataHandler
 
     public void SaveRenamedVideo(string originalVideoFileName, string newVideoId, VideoMetaJson videoMetaJson)
     {
-        File.Copy(OriginalDataFolderPath + originalVideoFileName, ResultDataFolderPath + newVideoId + ".mp4");
+        if (!Directory.Exists(ResultVideoFolderPath)) Directory.CreateDirectory(ResultVideoFolderPath);
+        File.Copy(OriginalDataFolderPath + originalVideoFileName, ResultVideoFolderPath + newVideoId + ".mov");
         
         var j = JsonUtility.ToJson(videoMetaJson, true);
-        SaveJson(j, ResultDataFolderPath + videoMetaJson.videoId + ".json");
+        SaveJson(j, ResultVideoFolderPath + videoMetaJson.videoId + ".json");
     }
 }
