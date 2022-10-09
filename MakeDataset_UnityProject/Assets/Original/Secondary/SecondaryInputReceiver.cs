@@ -4,16 +4,20 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using TMPro;
 
-public class SecondaryInputReceiver : MonoBehaviour
+namespace RWM.VR
 {
-    //Inputから起動
-    [SerializeField] private MakeSearchGridData makeSearchGridData;
-    public void PushExec()
+    public class SecondaryInputReceiver : MonoBehaviour
     {
-        makeSearchGridData.Execute(playAreaIF.text);
-        Debug.Log("Exec!!!");
-    }
+        //Inputから起動
+        [SerializeField] private MakeSearchGridData makeSearchGridData;
 
-    //Inputを参照
-    [SerializeField] private TMP_InputField playAreaIF;
+        public void PushExec()
+        {
+            makeSearchGridData.Execute(playAreaIF.text);
+            Debug.Log("Exec!!!");
+        }
+
+        //Inputを参照
+        [SerializeField] private TMP_InputField playAreaIF;
+    }
 }
