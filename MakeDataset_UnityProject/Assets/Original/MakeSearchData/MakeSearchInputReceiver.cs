@@ -6,7 +6,7 @@ using TMPro;
 
 namespace RWM.VR
 {
-    public class SecondaryInputReceiver : MonoBehaviour
+    public class MakeSearchInputReceiver : MonoBehaviour
     {
         //Inputから起動
         [SerializeField] private MakeSearchGridData makeSearchGridData;
